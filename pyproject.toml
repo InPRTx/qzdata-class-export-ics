@@ -1,0 +1,20 @@
+[tool.pdm]
+
+[project]
+name = "qzdata-class-export-ics"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "InPRTx", email = "inprtx@gmail.com"},
+]
+dependencies = [
+    "xlrd>=2.0.1",
+    "ics>=0.7.2",
+]
+requires-python = ">=3.8"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-pep517>=1.0"]
+build-backend = "pdm.pep517.api"
