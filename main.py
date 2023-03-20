@@ -32,7 +32,10 @@ class QZData:
         self.__resolve_sheet()
         self.c = Calendar()
         self.gen_new_class()
-        open(self.output_filename, 'w', encoding='utf-8').write(self.c.__str__())
+        write_str = self.c.__str__().replace('\r\n', '\n').replace('BEGIN:VCALENDAR\nVERSION:2.0',
+                                                                   'BEGIN:VCALENDAR\nVERSION:2.0\nX-WR-TIMEZONE:Asia/Shanghai').replace(
+            'DTEND', 'DTEND;TZID=Asia/Shanghai').replace('DTSTART', 'DTSTART;TZID=Asia/Shanghai')
+        open(self.output_filename, 'w', encoding='utf-8').write(write_str)
 
     def __resolve_sheet(self):
         """
@@ -73,11 +76,13 @@ class QZData:
                         __times = self.times_winter
                     # __times[time_key - 1]
                     e.begin = e.begin.replace(hour=int(__times[time_key - 1][0].split(':')[0]),
-                                              minute=int(__times[time_key - 1][0].split(':')[1]))
+                                              minute=int(__times[time_key - 1][0].split(':')[1]),
+                                              tzinfo=timezone(timedelta(hours=0)))
                     # print('上课时间：', __times[time_key - 1])
                     # print('上课时间：', e.begin)
                     e.end = e.begin.replace(hour=int(__times[time_key - 1][1].split(':')[0]),
-                                            minute=int(__times[time_key - 1][1].split(':')[1]))
+                                            minute=int(__times[time_key - 1][1].split(':')[1]),
+                                            tzinfo=timezone(timedelta(hours=0)))
                     # print('下课时间：', e.end)
 
                     e.description = '教师：' + class_.teacher
